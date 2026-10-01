@@ -3,9 +3,26 @@ import { getDaysInMonth } from '../utils/calendarUtils';
 
 const WEEKDAYS = ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'Chủ Nhật'];
 
-export default function CalendarGrid({ year, month, leaves, onSelectDate, onEditLeave }) {
+export default function CalendarGrid({
+  year,
+  month,
+  leaves,
+  onSelectDate,
+  onEditLeave,
+  isMultiSelect = false,
+  selectedDates = [],
+  onToggleDate
+}) {
   const days = getDaysInMonth(year, month);
   const todayStr = new Date().toISOString().slice(0, 10);
+
+  const handleCellClick = dateStr => {
+    if (isMultiSelect) {
+      onToggleDate?.(dateStr);
+    } else {
+      onSelectDate(dateStr);
+    }
+  };
 
   return (
     <div className="calendar-wrapper">
@@ -20,6 +37,7 @@ export default function CalendarGrid({ year, month, leaves, onSelectDate, onEdit
         {days.map((dayItem, idx) => {
           const { dateStr, dayNumber, isCurrentMonth } = dayItem;
           const isToday = dateStr === todayStr;
+          const isSelectedMulti = isMultiSelect && selectedDates.includes(dateStr);
           const dayLeaves = leaves.filter(l => l.date === dateStr);
 
           return (
@@ -27,14 +45,17 @@ export default function CalendarGrid({ year, month, leaves, onSelectDate, onEdit
               key={`${dateStr}-${idx}`}
               className={`calendar-cell ${!isCurrentMonth ? 'cell-other-month' : ''} ${
                 isToday ? 'cell-today' : ''
-              }`}
-              onClick={() => onSelectDate(dateStr)}
+              } ${isSelectedMulti ? 'cell-selected-multi' : ''}`}
+              onClick={() => handleCellClick(dateStr)}
             >
               <div className="cell-header">
                 <span className={`day-number ${isToday ? 'day-number-today' : ''}`}>
                   {dayNumber}
                 </span>
-                {isToday && <span className="today-badge">Hôm nay</span>}
+                <div className="cell-badges">
+                  {isToday && <span className="today-badge">Hôm nay</span>}
+                  {isSelectedMulti && <span className="multi-check-badge">✓</span>}
+                </div>
               </div>
 
               <div className="cell-content">
@@ -43,8 +64,10 @@ export default function CalendarGrid({ year, month, leaves, onSelectDate, onEdit
                     key={leave.id}
                     className={`leave-badge badge-session-${leave.session}`}
                     onClick={e => {
-                      e.stopPropagation();
-                      onEditLeave(leave);
+                      if (!isMultiSelect) {
+                        e.stopPropagation();
+                        onEditLeave(leave);
+                      }
                     }}
                     title={`${leave.reason ? `${leave.reason} - ` : ''}Bấm để sửa/xóa`}
                   >

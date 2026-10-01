@@ -30,4 +30,30 @@ describe('CalendarGrid component', () => {
     fireEvent.click(leaveBadge);
     expect(onEditLeave).toHaveBeenCalledWith(leaves[0]);
   });
+
+  it('handles multi-select date clicks and highlights selected cells', () => {
+    const onToggleDate = vi.fn();
+    const onSelectDate = vi.fn();
+
+    render(
+      <CalendarGrid
+        year={2026}
+        month={10}
+        leaves={[]}
+        isMultiSelect={true}
+        selectedDates={['2026-10-15']}
+        onToggleDate={onToggleDate}
+        onSelectDate={onSelectDate}
+      />
+    );
+
+    const cell15 = screen.getByText('15').closest('.calendar-cell');
+    expect(cell15).toHaveClass('cell-selected-multi');
+
+    const cell16 = screen.getByText('16').closest('.calendar-cell');
+    fireEvent.click(cell16);
+
+    expect(onToggleDate).toHaveBeenCalledWith('2026-10-16');
+    expect(onSelectDate).not.toHaveBeenCalled();
+  });
 });
