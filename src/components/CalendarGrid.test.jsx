@@ -47,13 +47,57 @@ describe('CalendarGrid component', () => {
       />
     );
 
-    const cell15 = screen.getByText('15').closest('.calendar-cell');
+    const cell15 = screen
+      .getAllByText('15')
+      .find(el => el.classList.contains('day-number'))
+      .closest('.calendar-cell');
     expect(cell15).toHaveClass('cell-selected-multi');
 
-    const cell16 = screen.getByText('16').closest('.calendar-cell');
+    const cell16 = screen
+      .getAllByText('16')
+      .find(el => el.classList.contains('day-number'))
+      .closest('.calendar-cell');
     fireEvent.click(cell16);
 
     expect(onToggleDate).toHaveBeenCalledWith('2026-10-16');
     expect(onSelectDate).not.toHaveBeenCalled();
   });
+
+  it('renders lunar dates and holiday badges when showLunar is true', () => {
+    render(
+      <CalendarGrid
+        year={2026}
+        month={10}
+        leaves={[]}
+        showLunar={true}
+        onSelectDate={vi.fn()}
+        onEditLeave={vi.fn()}
+      />
+    );
+
+    // Ngày 20/10/2026 có ngày lễ 20/10 Phụ Nữ VN
+    expect(screen.getByText(/20\/10 Phụ Nữ VN/i)).toBeInTheDocument();
+
+    // Có ít nhất 1 phần tử có class lunar-day
+    const lunarElements = document.querySelectorAll('.lunar-day');
+    expect(lunarElements.length).toBeGreaterThan(0);
+  });
+
+  it('hides lunar dates and holiday badges when showLunar is false', () => {
+    render(
+      <CalendarGrid
+        year={2026}
+        month={10}
+        leaves={[]}
+        showLunar={false}
+        onSelectDate={vi.fn()}
+        onEditLeave={vi.fn()}
+      />
+    );
+
+    expect(screen.queryByText(/20\/10 Phụ Nữ VN/i)).not.toBeInTheDocument();
+    const lunarElements = document.querySelectorAll('.lunar-day');
+    expect(lunarElements.length).toBe(0);
+  });
 });
+

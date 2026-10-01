@@ -724,6 +724,8 @@
 .calendar-toolbar {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
   margin-bottom: 12px;
 }
 
@@ -899,5 +901,95 @@
 .btn-edit-holiday:hover {
   background: rgba(56, 189, 248, 0.25);
 }
+
+/* Lunar Calendar & Holiday Badge Styles */
+.day-number-wrapper {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.lunar-day {
+  font-size: 0.6875rem;
+  color: #94a3b8;
+  font-weight: 500;
+  letter-spacing: -0.2px;
+}
+
+.lunar-day.lunar-highlight {
+  color: #fbbf24;
+  font-weight: 700;
+  text-shadow: 0 0 6px rgba(251, 191, 36, 0.35);
+}
+
+.holiday-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.holiday-badge.holiday-official {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.25), rgba(220, 38, 38, 0.15));
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  color: #fca5a5;
+}
+
+.holiday-badge.holiday-commemorative {
+  background: rgba(139, 92, 246, 0.15);
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  color: #c4b5fd;
+}
+
+.holiday-icon {
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+.holiday-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.calendar-cell.cell-holiday-official {
+  border-color: rgba(239, 68, 68, 0.35);
+  background: rgba(239, 68, 68, 0.04);
+}
+
+.btn-toggle-lunar {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  transition: all var(--transition-fast);
+}
+
+.btn-toggle-lunar:hover {
+  background: var(--bg-surface-hover);
+  color: var(--text-primary);
+}
+
+.btn-toggle-lunar.active {
+  background: rgba(251, 191, 36, 0.12);
+  border-color: #fbbf24;
+  color: #fbbf24;
+  box-shadow: 0 0 12px rgba(251, 191, 36, 0.2);
+}
+
 
 
