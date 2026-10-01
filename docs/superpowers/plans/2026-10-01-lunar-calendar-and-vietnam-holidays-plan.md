@@ -29,7 +29,7 @@
   - `convertSolarToLunar(dd: number, mm: number, yyyy: number, timeZone?: number): { lunarDay: number, lunarMonth: number, lunarYear: number, isLeap: boolean }`
   - `formatLunarDay(lunarObj: { lunarDay: number, lunarMonth: number, isLeap?: boolean }): string`
 
-- [ ] **Step 1: Viết test cho `lunarUtils.test.js`**
+- [x] **Step 1: Viết test cho `lunarUtils.test.js`**
 
 ```javascript
 import { describe, it, expect } from 'vitest';
@@ -76,21 +76,21 @@ describe('lunarUtils', () => {
 });
 ```
 
-- [ ] **Step 2: Chạy test để xác nhận FAIL**
+- [x] **Step 2: Chạy test để xác nhận FAIL**
 
 Run: `npx vitest run src/utils/lunarUtils.test.js`
 Expected: FAIL (File không tồn tại).
 
-- [ ] **Step 3: Triển khai trong `src/utils/lunarUtils.js`**
+- [x] **Step 3: Triển khai trong `src/utils/lunarUtils.js`**
 
 Viết thuật toán chuyển đổi thiên văn Hồ Ngọc Đức (GMT+7) và hàm `formatLunarDay`.
 
-- [ ] **Step 4: Chạy test để xác nhận PASS**
+- [x] **Step 4: Chạy test để xác nhận PASS**
 
 Run: `npx vitest run src/utils/lunarUtils.test.js`
 Expected: PASS.
 
-- [ ] **Step 5: Commit Task 1**
+- [x] **Step 5: Commit Task 1**
 
 ```bash
 git add src/utils/lunarUtils.js src/utils/lunarUtils.test.js
@@ -113,7 +113,7 @@ git commit -m "feat: implement solar to Vietnamese lunar conversion utility"
   - `COMMEMORATIVE_SOLAR_HOLIDAYS`: Record<string, { name: string, icon: string }>
   - `COMMEMORATIVE_LUNAR_HOLIDAYS`: Record<string, { name: string, icon: string }>
 
-- [ ] **Step 1: Viết test cho `holidayData.test.js`**
+- [x] **Step 1: Viết test cho `holidayData.test.js`**
 
 ```javascript
 import { describe, it, expect } from 'vitest';
@@ -193,21 +193,21 @@ describe('holidayData', () => {
 });
 ```
 
-- [ ] **Step 2: Chạy test để xác nhận FAIL**
+- [x] **Step 2: Chạy test để xác nhận FAIL**
 
 Run: `npx vitest run src/utils/holidayData.test.js`
 Expected: FAIL (File không tồn tại).
 
-- [ ] **Step 3: Triển khai trong `src/utils/holidayData.js`**
+- [x] **Step 3: Triển khai trong `src/utils/holidayData.js`**
 
 Khai báo các bộ từ điển ngày lễ và hàm `getHoliday`.
 
-- [ ] **Step 4: Chạy test để xác nhận PASS**
+- [x] **Step 4: Chạy test để xác nhận PASS**
 
 Run: `npx vitest run src/utils/holidayData.test.js`
 Expected: PASS.
 
-- [ ] **Step 5: Commit Task 2**
+- [x] **Step 5: Commit Task 2**
 
 ```bash
 git add src/utils/holidayData.js src/utils/holidayData.test.js
@@ -227,18 +227,18 @@ git commit -m "feat: define Vietnam holidays dataset and lookup function"
 - Props `CalendarGrid`:
   - Thêm prop `showLunar?: boolean` (mặc định: `true`)
 
-- [ ] **Step 1: Viết test cho `CalendarGrid.test.jsx`**
+- [x] **Step 1: Viết test cho `CalendarGrid.test.jsx`**
 
 Bổ sung test case kiểm tra:
 1. Khi `showLunar=true`, hiển thị số ngày âm (ví dụ `15` hoặc `1/9`) và badge ngày lễ nếu có.
 2. Khi `showLunar=false`, không hiển thị class `lunar-day` hoặc badge ngày lễ.
 
-- [ ] **Step 2: Chạy test để xác nhận FAIL**
+- [x] **Step 2: Chạy test để xác nhận FAIL**
 
 Run: `npx vitest run src/components/CalendarGrid.test.jsx`
 Expected: FAIL.
 
-- [ ] **Step 3: Cập nhật `CalendarGrid.jsx` & `App.css`**
+- [x] **Step 3: Cập nhật `CalendarGrid.jsx` & `App.css`**
 
 - Import `convertSolarToLunar`, `formatLunarDay` từ `../utils/lunarUtils` và `getHoliday` từ `../utils/holidayData`.
 - Tính `lunarDate` và `holiday` cho từng ô lịch.
@@ -246,12 +246,12 @@ Expected: FAIL.
 - Render `<div className={`holiday-badge holiday-${holiday.type}`}>...</div>` phía trên ca nghỉ phép.
 - Thêm styling bắt mắt trong `src/App.css` (đỏ cờ cho `official`, tím pastel cho `commemorative`, vàng rằm cho mùng 1/rằm).
 
-- [ ] **Step 4: Chạy test để xác nhận PASS**
+- [x] **Step 4: Chạy test để xác nhận PASS**
 
 Run: `npx vitest run src/components/CalendarGrid.test.jsx`
 Expected: PASS.
 
-- [ ] **Step 5: Commit Task 3**
+- [x] **Step 5: Commit Task 3**
 
 ```bash
 git add src/components/CalendarGrid.jsx src/components/CalendarGrid.test.jsx src/App.css
@@ -270,7 +270,7 @@ git commit -m "feat: render lunar date and holiday badges in CalendarGrid"
 - `showLunar` state lưu trong `localStorage` với key `leave_planner_show_lunar`.
 - Button toggle nằm ở thanh công cụ: `🌙 Lịch Âm & Ngày Lễ`.
 
-- [ ] **Step 1: Viết test integration trong `src/App.test.jsx`**
+- [x] **Step 1: Viết test integration trong `src/App.test.jsx`**
 
 ```jsx
   it('toggles lunar calendar and holiday badges on and off', () => {
@@ -291,23 +291,23 @@ git commit -m "feat: render lunar date and holiday badges in CalendarGrid"
   });
 ```
 
-- [ ] **Step 2: Triển khai trong `src/App.jsx`**
+- [x] **Step 2: Triển khai trong `src/App.jsx`**
 
 - Khởi tạo `showLunar` từ `localStorage.getItem('leave_planner_show_lunar') !== 'false'`.
 - Nút toggle trong header / toolbar.
 - Truyền `showLunar` vào `<CalendarGrid />`.
 
-- [ ] **Step 3: Chạy toàn bộ test suite**
+- [x] **Step 3: Chạy toàn bộ test suite**
 
 Run: `npm run test`
 Expected: Tất cả các bài test (30+ tests) đều PASS.
 
-- [ ] **Step 4: Kiểm tra build sản phẩm**
+- [x] **Step 4: Kiểm tra build sản phẩm**
 
 Run: `npm run build`
 Expected: Build Vite thành công.
 
-- [ ] **Step 5: Commit Task 4 và đẩy lên GitHub**
+- [x] **Step 5: Commit Task 4 và đẩy lên GitHub**
 
 ```bash
 git add src/App.jsx src/App.test.jsx

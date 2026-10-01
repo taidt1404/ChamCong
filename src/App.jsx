@@ -40,6 +40,20 @@ export default function App() {
   const [isMultiSelectMode, setIsMultiSelectMode] = useState(false);
   const [selectedDates, setSelectedDates] = useState([]);
 
+  // Lunar calendar display toggle
+  const [showLunar, setShowLunar] = useState(() => {
+    const saved = localStorage.getItem('leave_planner_show_lunar');
+    return saved !== null ? saved === 'true' : true;
+  });
+
+  const handleToggleLunar = () => {
+    setShowLunar(prev => {
+      const next = !prev;
+      localStorage.setItem('leave_planner_show_lunar', String(next));
+      return next;
+    });
+  };
+
   // Month navigation handlers
   const handlePrevMonth = () => {
     if (currentMonth === 1) {
@@ -168,6 +182,16 @@ export default function App() {
       <div className="calendar-toolbar">
         <button
           type="button"
+          className={`btn-toggle-lunar ${showLunar ? 'active' : ''}`}
+          onClick={handleToggleLunar}
+          aria-label="Bật tắt Lịch Âm và Ngày Lễ"
+        >
+          <span>{showLunar ? '🌙' : '🌑'}</span>
+          <span>{showLunar ? 'Lịch Âm & Ngày Lễ' : 'Lịch Âm & Ngày Lễ (Tắt)'}</span>
+        </button>
+
+        <button
+          type="button"
           className={`btn-toggle-multi ${isMultiSelectMode ? 'active' : ''}`}
           onClick={handleToggleMultiSelect}
         >
@@ -210,6 +234,7 @@ export default function App() {
         isMultiSelect={isMultiSelectMode}
         selectedDates={selectedDates}
         onToggleDate={handleToggleDate}
+        showLunar={showLunar}
       />
 
       <div className="section-table">

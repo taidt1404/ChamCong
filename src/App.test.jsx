@@ -49,8 +49,14 @@ describe('App Integration', () => {
     fireEvent.click(toggleMultiBtn);
 
     // Click chọn ngày 10 và 11
-    const cell10 = screen.getByText('10').closest('.calendar-cell');
-    const cell11 = screen.getByText('11').closest('.calendar-cell');
+    const cell10 = screen
+      .getAllByText('10')
+      .find(el => el.classList.contains('day-number'))
+      .closest('.calendar-cell');
+    const cell11 = screen
+      .getAllByText('11')
+      .find(el => el.classList.contains('day-number'))
+      .closest('.calendar-cell');
     fireEvent.click(cell10);
     fireEvent.click(cell11);
 
@@ -99,6 +105,25 @@ describe('App Integration', () => {
     expect(screen.getByText('6.0 ngày')).toBeInTheDocument();
     expect(screen.getByText(/Chuẩn 4.0 \+ 2.0 ngày lễ/i)).toBeInTheDocument();
     expect(screen.getByText('+6.0 CÔNG')).toBeInTheDocument();
+  });
+
+  it('toggles lunar calendar and holiday badges on and off', () => {
+    render(<App />);
+
+    // Kiểm tra toggle switch tồn tại
+    const toggleBtn = screen.getByRole('button', { name: /Lịch Âm và Ngày Lễ/i });
+    expect(toggleBtn).toBeInTheDocument();
+    expect(toggleBtn).toHaveClass('active');
+
+    // Click để tắt
+    fireEvent.click(toggleBtn);
+    expect(localStorage.getItem('leave_planner_show_lunar')).toBe('false');
+    expect(toggleBtn).not.toHaveClass('active');
+
+    // Click bật lại
+    fireEvent.click(toggleBtn);
+    expect(localStorage.getItem('leave_planner_show_lunar')).toBe('true');
+    expect(toggleBtn).toHaveClass('active');
   });
 });
 
