@@ -1,7 +1,16 @@
 import React from 'react';
 
-export default function StatsOverview({ balanceData }) {
-  const { quota, usedDays, balance, status, morningCount, afternoonCount, fullCount } = balanceData;
+export default function StatsOverview({ balanceData, onEditHolidayQuota }) {
+  const {
+    quota,
+    usedDays,
+    balance,
+    status,
+    morningCount,
+    afternoonCount,
+    fullCount,
+    holidayBonus = 0
+  } = balanceData;
 
   const getStatusBadge = () => {
     if (status === 'positive') {
@@ -22,7 +31,7 @@ export default function StatsOverview({ balanceData }) {
     }
     return {
       label: 'ĐỦ CÔNG',
-      sub: 'Đạt đúng hạn mức 4.0 ngày',
+      sub: 'Đạt đúng hạn mức',
       badgeClass: 'badge-balanced',
       valueDisplay: '0.0 CÔNG'
     };
@@ -35,9 +44,26 @@ export default function StatsOverview({ balanceData }) {
     <div className="stats-container">
       {/* Card 1: Hạn mức */}
       <div className="stat-card">
-        <span className="stat-label">Hạn Mức Tháng</span>
+        <div className="stat-badge-header">
+          <span className="stat-label">Hạn Mức Tháng</span>
+          {onEditHolidayQuota && (
+            <button
+              type="button"
+              className="btn-edit-holiday"
+              onClick={onEditHolidayQuota}
+              aria-label="Chỉnh sửa ngày nghỉ lễ"
+              title="Cài đặt số ngày nghỉ lễ cho tháng này"
+            >
+              {holidayBonus > 0 ? `+${holidayBonus} lễ` : '+ Lễ'} ✏️
+            </button>
+          )}
+        </div>
         <div className="stat-value">{quota.toFixed(1)} ngày</div>
-        <span className="stat-desc">Tiêu chuẩn định mức cố định</span>
+        <span className="stat-desc">
+          {holidayBonus > 0
+            ? `Chuẩn 4.0 + ${holidayBonus.toFixed(1)} ngày lễ`
+            : 'Chuẩn định mức 4.0 ngày (Bấm + Lễ để thêm)'}
+        </span>
       </div>
 
       {/* Card 2: Đã nghỉ */}
