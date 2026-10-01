@@ -76,6 +76,41 @@ export function useLeaves() {
     return validated.length;
   };
 
+  const saveMultipleLeaves = (dates, { session, reason = '' }) => {
+    if (!Array.isArray(dates) || dates.length === 0) return;
+    const days = getLeaveDays(session);
+    const cleanReason = reason.trim();
+    const targetDates = new Set(dates);
+
+    setLeaves(prev => {
+      const remainingTargets = new Set(targetDates);
+      const updated = prev.map(r => {
+        if (remainingTargets.has(r.date)) {
+          remainingTargets.delete(r.date);
+          return {
+            ...r,
+            session,
+            days,
+            reason: cleanReason,
+            updatedAt: new Date().toISOString()
+          };
+        }
+        return r;
+      });
+
+      const newRecords = Array.from(remainingTargets).map(d => ({
+        id: `${Date.now()}_${Math.random().toString(36).substr(2, 9)}_${d}`,
+        date: d,
+        session,
+        days,
+        reason: cleanReason,
+        createdAt: new Date().toISOString()
+      }));
+
+      return [...updated, ...newRecords];
+    });
+  };
+
   const clearAllLeaves = () => {
     setLeaves([]);
   };
@@ -85,6 +120,7 @@ export function useLeaves() {
     addLeave,
     updateLeave,
     deleteLeave,
+    saveMultipleLeaves,
     getLeaveByDate,
     importLeaves,
     clearAllLeaves
