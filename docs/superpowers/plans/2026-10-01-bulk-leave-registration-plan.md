@@ -27,7 +27,7 @@
 **Interfaces:**
 - Produces: `saveMultipleLeaves(dates: string[], { session: 'morning'|'afternoon'|'full', reason?: string }): void`
 
-- [ ] **Step 1: Viết test cho `saveMultipleLeaves` trong `src/hooks/useLeaves.test.js`**
+- [x] **Step 1: Viết test cho `saveMultipleLeaves` trong `src/hooks/useLeaves.test.js`**
 
 Thêm test case kiểm tra việc lưu nhiều ngày (kết hợp cả ngày mới và ngày đã có để ghi đè):
 
@@ -69,12 +69,12 @@ Thêm test case kiểm tra việc lưu nhiều ngày (kết hợp cả ngày m�
   });
 ```
 
-- [ ] **Step 2: Chạy test để xác nhận test mới FAIL**
+- [x] **Step 2: Chạy test để xác nhận test mới FAIL**
 
 Run: `npm run test`
 Expected: FAIL (result.current.saveMultipleLeaves is not a function).
 
-- [ ] **Step 3: Triển khai `saveMultipleLeaves` trong `src/hooks/useLeaves.js`**
+- [x] **Step 3: Triển khai `saveMultipleLeaves` trong `src/hooks/useLeaves.js`**
 
 Cập nhật `src/hooks/useLeaves.js`:
 ```javascript
@@ -115,12 +115,12 @@ Cập nhật `src/hooks/useLeaves.js`:
 ```
 Export thêm `saveMultipleLeaves` từ `useLeaves`.
 
-- [ ] **Step 4: Chạy test để xác nhận PASS**
+- [x] **Step 4: Chạy test để xác nhận PASS**
 
 Run: `npm run test`
 Expected: All tests pass.
 
-- [ ] **Step 5: Commit Task 1**
+- [x] **Step 5: Commit Task 1**
 
 ```bash
 git add src/hooks/useLeaves.js src/hooks/useLeaves.test.js
@@ -146,7 +146,7 @@ git commit -m "feat: add saveMultipleLeaves method to useLeaves hook"
   - `onDelete`: (id) => void
   - `onRemoveDate`: (dateStr) => void (loại bỏ 1 ngày khỏi danh sách chọn)
 
-- [ ] **Step 1: Viết test cho bulk mode trong `src/components/LeaveModal.test.jsx`**
+- [x] **Step 1: Viết test cho bulk mode trong `src/components/LeaveModal.test.jsx`**
 
 Thêm test case:
 ```jsx
@@ -186,12 +186,12 @@ Thêm test case:
   });
 ```
 
-- [ ] **Step 2: Chạy test để xác nhận FAIL**
+- [x] **Step 2: Chạy test để xác nhận FAIL**
 
 Run: `npm run test`
 Expected: FAIL.
 
-- [ ] **Step 3: Cập nhật `src/components/LeaveModal.jsx`**
+- [x] **Step 3: Cập nhật `src/components/LeaveModal.jsx`**
 
 Hỗ trợ `dates` prop:
 - Nếu `dates && dates.length > 1`: Tiêu đề `Đăng Ký Nghỉ Cho ${dates.length} Ngày`.
@@ -200,12 +200,12 @@ Hỗ trợ `dates` prop:
 - Nút submit: `Lưu Cho ${dates.length} Ngày`.
 - Khi submit: gọi `onSave({ dates, date, session, reason })`.
 
-- [ ] **Step 4: Chạy test để xác nhận PASS**
+- [x] **Step 4: Chạy test để xác nhận PASS**
 
 Run: `npm run test`
 Expected: PASS.
 
-- [ ] **Step 5: Commit Task 2**
+- [x] **Step 5: Commit Task 2**
 
 ```bash
 git add src/components/LeaveModal.jsx src/components/LeaveModal.test.jsx
@@ -226,7 +226,7 @@ git commit -m "feat: enhance LeaveModal to support multi-date bulk registration"
   - Thêm `selectedDates`: string[]
   - Thêm `onToggleDate`: (dateStr: string) => void
 
-- [ ] **Step 1: Viết test cho Calendar multi-select trong `src/components/CalendarGrid.test.jsx`**
+- [x] **Step 1: Viết test cho Calendar multi-select trong `src/components/CalendarGrid.test.jsx`**
 
 ```jsx
   it('handles multi-select date clicks and highlights selected cells', () => {
@@ -256,12 +256,12 @@ git commit -m "feat: enhance LeaveModal to support multi-date bulk registration"
   });
 ```
 
-- [ ] **Step 2: Chạy test để xác nhận FAIL**
+- [x] **Step 2: Chạy test để xác nhận FAIL**
 
 Run: `npm run test`
 Expected: FAIL.
 
-- [ ] **Step 3: Cập nhật `src/components/CalendarGrid.jsx` và `src/App.css`**
+- [x] **Step 3: Cập nhật `src/components/CalendarGrid.jsx` và `src/App.css`**
 
 Trong `CalendarGrid.jsx`:
 - Nhận `isMultiSelect = false`, `selectedDates = []`, `onToggleDate`.
@@ -275,12 +275,12 @@ Thêm CSS vào `src/App.css`:
 - `.multi-check-badge`: huy hiệu xanh ngọc nổi bật ở góc ô.
 - Style cho date-chips trong modal.
 
-- [ ] **Step 4: Chạy test để xác nhận PASS**
+- [x] **Step 4: Chạy test để xác nhận PASS**
 
 Run: `npm run test`
 Expected: PASS.
 
-- [ ] **Step 5: Commit Task 3**
+- [x] **Step 5: Commit Task 3**
 
 ```bash
 git add src/components/CalendarGrid.jsx src/components/CalendarGrid.test.jsx src/App.css
@@ -298,7 +298,7 @@ git commit -m "feat: add multi-select visual highlight and toggle handlers to Ca
 **Interfaces:**
 - Produces: Trải nghiệm hoàn chỉnh bật/tắt chế độ chọn nhiều ngày, thanh nổi `BulkActionBar` khi chọn ngày, lưu đồng thời nhiều ngày và tự động cập nhật toàn bộ hệ thống.
 
-- [ ] **Step 1: Viết test cho Bulk Registration Flow trong `src/App.test.jsx`**
+- [x] **Step 1: Viết test cho Bulk Registration Flow trong `src/App.test.jsx`**
 
 ```jsx
   it('allows registering multiple leaves in bulk mode and updates balance', () => {
@@ -340,7 +340,7 @@ git commit -m "feat: add multi-select visual highlight and toggle handlers to Ca
   });
 ```
 
-- [ ] **Step 2: Cập nhật `src/App.jsx` và `src/App.css`**
+- [x] **Step 2: Cập nhật `src/App.jsx` và `src/App.css`**
 
 Trong `src/App.jsx`:
 - Thêm state:
@@ -356,24 +356,24 @@ Trong `src/App.jsx`:
   - Nếu chỉ có `date`: gọi `addLeave` / `updateLeave` như cũ.
 - Xử lý `handleRemoveDateFromModal(dateStr)`: bỏ ngày đó khỏi `selectedDates`.
 
-- [ ] **Step 3: Chạy toàn bộ test suite**
+- [x] **Step 3: Chạy toàn bộ test suite**
 
 Run: `npm run test`
 Expected: All tests pass (bao gồm 20 tests cũ và các tests mới).
 
-- [ ] **Step 4: Chạy kiểm tra build**
+- [x] **Step 4: Chạy kiểm tra build**
 
 Run: `npm run build`
 Expected: Build production thành công 100%.
 
-- [ ] **Step 5: Commit Task 4**
+- [x] **Step 5: Commit Task 4**
 
 ```bash
 git add src/App.jsx src/App.css src/App.test.jsx
 git commit -m "feat: complete bulk leave registration feature and integration tests"
 ```
 
-- [ ] **Step 6: Đẩy cập nhật lên GitHub**
+- [x] **Step 6: Đẩy cập nhật lên GitHub**
 
 ```bash
 git push origin main

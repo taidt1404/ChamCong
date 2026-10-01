@@ -21,6 +21,7 @@ export default function App() {
     addLeave,
     updateLeave,
     deleteLeave,
+    saveMultipleLeaves,
     importLeaves,
     clearAllLeaves
   } = useLeaves();
@@ -30,6 +31,10 @@ export default function App() {
   const [editingLeave, setEditingLeave] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBackupOpen, setIsBackupOpen] = useState(false);
+
+  // Multi-select states
+  const [isMultiSelectMode, setIsMultiSelectMode] = useState(false);
+  const [selectedDates, setSelectedDates] = useState([]);
 
   // Month navigation handlers
   const handlePrevMonth = () => {
@@ -56,6 +61,39 @@ export default function App() {
     setCurrentMonth(now.getMonth() + 1);
   };
 
+  // Multi-select handlers
+  const handleToggleMultiSelect = () => {
+    setIsMultiSelectMode(prev => {
+      const next = !prev;
+      if (!next) setSelectedDates([]);
+      return next;
+    });
+  };
+
+  const handleToggleDate = dateStr => {
+    setSelectedDates(prev =>
+      prev.includes(dateStr) ? prev.filter(d => d !== dateStr) : [...prev, dateStr]
+    );
+  };
+
+  const handleOpenBulkModal = () => {
+    if (selectedDates.length > 0) {
+      setSelectedDate(null);
+      setEditingLeave(null);
+      setIsModalOpen(true);
+    }
+  };
+
+  const handleRemoveDateChip = dateStr => {
+    setSelectedDates(prev => {
+      const next = prev.filter(d => d !== dateStr);
+      if (next.length === 0) {
+        setIsModalOpen(false);
+      }
+      return next;
+    });
+  };
+
   // Leave click handlers
   const handleSelectDate = dateStr => {
     const existing = leaves.find(l => l.date === dateStr);
@@ -70,8 +108,12 @@ export default function App() {
     setIsModalOpen(true);
   };
 
-  const handleSaveLeave = ({ date, session, reason }) => {
-    if (editingLeave) {
+  const handleSaveLeave = ({ date, dates, session, reason }) => {
+    if (dates && dates.length > 0) {
+      saveMultipleLeaves(dates, { session, reason });
+      setSelectedDates([]);
+      setIsMultiSelectMode(false);
+    } else if (editingLeave) {
       updateLeave(editingLeave.id, { date, session, reason });
     } else {
       addLeave({ date, session, reason });
@@ -109,12 +151,52 @@ export default function App() {
 
       <StatsOverview balanceData={balanceData} />
 
+      {/* Multi-select Controls & Action Bar */}
+      <div className="calendar-toolbar">
+        <button
+          type="button"
+          className={`btn-toggle-multi ${isMultiSelectMode ? 'active' : ''}`}
+          onClick={handleToggleMultiSelect}
+        >
+          <span>{isMultiSelectMode ? '☑' : '☐'}</span>
+          <span>{isMultiSelectMode ? 'Đang bật: Chọn nhiều ngày' : 'Chọn nhiều ngày'}</span>
+        </button>
+      </div>
+
+      {isMultiSelectMode && selectedDates.length > 0 && (
+        <div className="bulk-action-bar">
+          <div className="bulk-info">
+            <span className="bulk-icon">🗓️</span>
+            <span className="bulk-count">Đã chọn: {selectedDates.length} ngày</span>
+          </div>
+          <div className="bulk-actions">
+            <button
+              type="button"
+              className="btn btn-ghost btn-sm"
+              onClick={() => setSelectedDates([])}
+            >
+              Bỏ chọn
+            </button>
+            <button
+              type="button"
+              className="btn btn-primary btn-sm"
+              onClick={handleOpenBulkModal}
+            >
+              Đăng Ký {selectedDates.length} Ngày
+            </button>
+          </div>
+        </div>
+      )}
+
       <CalendarGrid
         year={currentYear}
         month={currentMonth}
         leaves={leaves}
         onSelectDate={handleSelectDate}
         onEditLeave={handleEditLeave}
+        isMultiSelect={isMultiSelectMode}
+        selectedDates={selectedDates}
+        onToggleDate={handleToggleDate}
       />
 
       <div className="section-table">
@@ -133,6 +215,7 @@ export default function App() {
       <LeaveModal
         isOpen={isModalOpen}
         date={selectedDate}
+        dates={selectedDates.length > 0 && isMultiSelectMode ? selectedDates : undefined}
         initialData={editingLeave}
         onClose={() => {
           setIsModalOpen(false);
@@ -140,6 +223,7 @@ export default function App() {
         }}
         onSave={handleSaveLeave}
         onDelete={handleDeleteLeave}
+        onRemoveDate={handleRemoveDateChip}
       />
 
       <BackupModal

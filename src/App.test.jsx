@@ -40,4 +40,42 @@ describe('App Integration', () => {
     expect(screen.getByText('0.5 ngày')).toBeInTheDocument();
     expect(screen.getByText('+3.5 CÔNG')).toBeInTheDocument();
   });
+
+  it('allows registering multiple leaves in bulk mode and updates balance', () => {
+    render(<App />);
+
+    // Bật chế độ chọn nhiều ngày
+    const toggleMultiBtn = screen.getByText(/Chọn Nhiều Ngày/i);
+    fireEvent.click(toggleMultiBtn);
+
+    // Click chọn ngày 10 và 11
+    const cell10 = screen.getByText('10').closest('.calendar-cell');
+    const cell11 = screen.getByText('11').closest('.calendar-cell');
+    fireEvent.click(cell10);
+    fireEvent.click(cell11);
+
+    // Thanh tác vụ hiển thị "Đã chọn: 2 ngày"
+    expect(screen.getByText(/Đã chọn: 2 ngày/i)).toBeInTheDocument();
+
+    // Bấm nút đăng ký trên thanh tác vụ
+    const registerBulkBtn = screen.getByText('Đăng Ký 2 Ngày');
+    fireEvent.click(registerBulkBtn);
+
+    // Modal bulk mở ra
+    expect(screen.getByText(/Đăng Ký Nghỉ Cho 2 Ngày/i)).toBeInTheDocument();
+
+    // Chọn nghỉ Chiều (0.5c)
+    fireEvent.click(screen.getByLabelText(/Buổi Chiều/i));
+
+    // Nhập lý do
+    const input = screen.getByPlaceholderText(/Nhập lý do/i);
+    fireEvent.change(input, { target: { value: 'Nghỉ giải quyết việc' } });
+
+    // Lưu
+    fireEvent.click(screen.getByText(/Lưu Cho 2 Ngày/i));
+
+    // Tổng số ngày đã đăng ký = 2 * 0.5 = 1.0 ngày, balance = 4.0 - 1.0 = +3.0 CÔNG
+    expect(screen.getByText('1.0 ngày')).toBeInTheDocument();
+    expect(screen.getByText('+3.0 CÔNG')).toBeInTheDocument();
+  });
 });

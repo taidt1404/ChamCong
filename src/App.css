@@ -721,6 +721,12 @@
 }
 
 /* Multi-Select Calendar & Bulk Action Bar */
+.calendar-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
 .btn-toggle-multi {
   display: inline-flex;
   align-items: center;
