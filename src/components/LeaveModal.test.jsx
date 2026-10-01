@@ -65,4 +65,40 @@ describe('LeaveModal component', () => {
     fireEvent.click(deleteBtn);
     expect(onDelete).toHaveBeenCalledWith('rec_1');
   });
+
+  it('renders in bulk mode with multiple dates and removes a date chip', () => {
+    const onSave = vi.fn();
+    const onClose = vi.fn();
+    const onRemoveDate = vi.fn();
+    const dates = ['2026-10-15', '2026-10-16', '2026-10-17'];
+
+    render(
+      <LeaveModal
+        isOpen={true}
+        dates={dates}
+        initialData={null}
+        onClose={onClose}
+        onSave={onSave}
+        onRemoveDate={onRemoveDate}
+      />
+    );
+
+    expect(screen.getByText(/Đăng Ký Nghỉ Cho 3 Ngày/i)).toBeInTheDocument();
+    expect(screen.getByText(/15\/10\/2026/)).toBeInTheDocument();
+    expect(screen.getByText(/16\/10\/2026/)).toBeInTheDocument();
+
+    // Click remove date button
+    const removeBtn = screen.getByLabelText('Bỏ ngày 15/10/2026');
+    fireEvent.click(removeBtn);
+    expect(onRemoveDate).toHaveBeenCalledWith('2026-10-15');
+
+    // Submit
+    fireEvent.click(screen.getByText(/Lưu Cho 3 Ngày/i));
+    expect(onSave).toHaveBeenCalledWith({
+      date: undefined,
+      dates,
+      session: 'full',
+      reason: ''
+    });
+  });
 });

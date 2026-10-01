@@ -3,7 +3,16 @@ import { formatDate, getDayOfWeekName } from '../utils/calendarUtils';
 
 const QUICK_REASONS = ['Việc gia đình', 'Khám sức khỏe', 'Đi du lịch', 'Việc cá nhân', 'Nghỉ ngơi'];
 
-export default function LeaveModal({ isOpen, date, initialData, onClose, onSave, onDelete }) {
+export default function LeaveModal({
+  isOpen,
+  date,
+  dates,
+  initialData,
+  onClose,
+  onSave,
+  onDelete,
+  onRemoveDate
+}) {
   const [session, setSession] = useState('full');
   const [reason, setReason] = useState('');
 
@@ -19,26 +28,62 @@ export default function LeaveModal({ isOpen, date, initialData, onClose, onSave,
 
   if (!isOpen) return null;
 
+  const isBulk = Array.isArray(dates) && dates.length > 0;
+  const isEditing = Boolean(initialData);
+
   const handleSubmit = e => {
     e.preventDefault();
     onSave({
       date,
+      dates,
       session,
       reason
     });
   };
 
-  const isEditing = Boolean(initialData);
+  const getTitle = () => {
+    if (isBulk) {
+      return `Đăng Ký Nghỉ Cho ${dates.length} Ngày`;
+    }
+    return isEditing ? 'Chỉnh Sửa Lịch Nghỉ' : 'Đăng Ký Lịch Nghỉ';
+  };
+
+  const getSubmitLabel = () => {
+    if (isBulk) {
+      return `Lưu Cho ${dates.length} Ngày`;
+    }
+    return isEditing ? 'Cập Nhật' : 'Lưu Lịch Nghỉ';
+  };
 
   return (
     <div className="modal-backdrop" onClick={onClose}>
       <div className="modal-card" onClick={e => e.stopPropagation()}>
         <div className="modal-header">
           <div>
-            <h3 className="modal-title">{isEditing ? 'Chỉnh Sửa Lịch Nghỉ' : 'Đăng Ký Lịch Nghỉ'}</h3>
-            <p className="modal-date">
-              {getDayOfWeekName(date)}, {formatDate(date)}
-            </p>
+            <h3 className="modal-title">{getTitle()}</h3>
+            {isBulk ? (
+              <div className="modal-bulk-chips">
+                {dates.map(d => (
+                  <span key={d} className="date-chip">
+                    {formatDate(d)}
+                    {onRemoveDate && dates.length > 1 && (
+                      <button
+                        type="button"
+                        className="chip-remove-btn"
+                        aria-label={`Bỏ ngày ${formatDate(d)}`}
+                        onClick={() => onRemoveDate(d)}
+                      >
+                        ✕
+                      </button>
+                    )}
+                  </span>
+                ))}
+              </div>
+            ) : (
+              <p className="modal-date">
+                {getDayOfWeekName(date)}, {formatDate(date)}
+              </p>
+            )}
           </div>
           <button className="btn-close" onClick={onClose} aria-label="Đóng">
             ✕
@@ -114,7 +159,7 @@ export default function LeaveModal({ isOpen, date, initialData, onClose, onSave,
           </div>
 
           <div className="modal-actions">
-            {isEditing && (
+            {!isBulk && isEditing && (
               <button
                 type="button"
                 className="btn btn-danger"
@@ -127,7 +172,7 @@ export default function LeaveModal({ isOpen, date, initialData, onClose, onSave,
               Hủy
             </button>
             <button type="submit" className="btn btn-primary">
-              {isEditing ? 'Cập Nhật' : 'Lưu Lịch Nghỉ'}
+              {getSubmitLabel()}
             </button>
           </div>
         </form>
