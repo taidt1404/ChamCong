@@ -28,7 +28,7 @@
 **Interfaces:**
 - Produces: Môi trường chạy Vite + Vitest sẵn sàng cho kiểm thử và phát triển.
 
-- [ ] **Step 1: Tạo file cấu hình `package.json` với React, Vite, Vitest**
+- [x] **Step 1: Tạo file cấu hình `package.json` với React, Vite, Vitest**
 
 ```json
 {
@@ -57,7 +57,7 @@
 }
 ```
 
-- [ ] **Step 2: Tạo `vite.config.js` hỗ trợ test và react**
+- [x] **Step 2: Tạo `vite.config.js` hỗ trợ test và react**
 
 ```javascript
 import { defineConfig } from 'vite';
@@ -73,13 +73,13 @@ export default defineConfig({
 });
 ```
 
-- [ ] **Step 3: Tạo `src/test/setup.js`**
+- [x] **Step 3: Tạo `src/test/setup.js`**
 
 ```javascript
 import '@testing-library/jest-dom';
 ```
 
-- [ ] **Step 4: Cài đặt dependencies và tạo cấu trúc cơ bản (`index.html`, `src/main.jsx`, `src/App.jsx`)**
+- [x] **Step 4: Cài đặt dependencies và tạo cấu trúc cơ bản (`index.html`, `src/main.jsx`, `src/App.jsx`)**
 
 Chạy lệnh cài đặt:
 ```powershell
@@ -132,7 +132,7 @@ export default function App() {
 }
 ```
 
-- [ ] **Step 5: Viết test cho `App.test.jsx` và chạy kiểm tra**
+- [x] **Step 5: Viết test cho `App.test.jsx` và chạy kiểm tra**
 
 Tạo `src/App.test.jsx`:
 ```jsx
@@ -155,7 +155,7 @@ npm run test
 ```
 Expected: 1 passed.
 
-- [ ] **Step 6: Commit code Task 1**
+- [x] **Step 6: Commit code Task 1**
 
 ```powershell
 git add package.json package-lock.json vite.config.js index.html src/
@@ -179,7 +179,7 @@ git commit -m "chore: setup vite react vitest testing environment"
   - `exportLeavesToCSV(records, year, month)`: tạo và tải file CSV UTF-8 kèm BOM.
   - `exportLeavesToJSON(records)`: tải file JSON sao lưu.
 
-- [ ] **Step 1: Viết test cho `calendarUtils.test.js`**
+- [x] **Step 1: Viết test cho `calendarUtils.test.js`**
 
 ```javascript
 import { describe, it, expect } from 'vitest';
@@ -241,14 +241,14 @@ describe('calendarUtils', () => {
 });
 ```
 
-- [ ] **Step 2: Chạy test để xác nhận FAIL**
+- [x] **Step 2: Chạy test để xác nhận FAIL**
 
 ```powershell
 npm run test
 ```
 Expected: FAIL (Cannot find module './calendarUtils').
 
-- [ ] **Step 3: Viết mã nguồn cho `src/utils/calendarUtils.js`**
+- [x] **Step 3: Viết mã nguồn cho `src/utils/calendarUtils.js`**
 
 ```javascript
 export const SESSION_LABELS = {
@@ -369,14 +369,14 @@ export function getDaysInMonth(year, month) {
 }
 ```
 
-- [ ] **Step 4: Chạy lại test `calendarUtils.test.js` để xác nhận PASS**
+- [x] **Step 4: Chạy lại test `calendarUtils.test.js` để xác nhận PASS**
 
 ```powershell
 npm run test
 ```
 Expected: PASS.
 
-- [ ] **Step 5: Viết test và mã nguồn cho `exportUtils.js`**
+- [x] **Step 5: Viết test và mã nguồn cho `exportUtils.js`**
 
 Tạo `src/utils/exportUtils.test.js`:
 ```javascript
@@ -446,7 +446,7 @@ export function downloadJSON(records) {
 }
 ```
 
-- [ ] **Step 6: Chạy test và Commit Task 2**
+- [x] **Step 6: Chạy test và Commit Task 2**
 
 ```powershell
 npm run test
@@ -472,7 +472,7 @@ git commit -m "feat: add calendar and export utilities with unit tests"
   - `importLeaves(importedArray)`: Nạp dữ liệu từ file sao lưu JSON.
   - `clearAllLeaves()`: Xóa toàn bộ dữ liệu.
 
-- [ ] **Step 1: Viết test cho `useLeaves.test.js`**
+- [x] **Step 1: Viết test cho `useLeaves.test.js`**
 
 ```javascript
 import { describe, it, expect, beforeEach } from 'vitest';
@@ -560,7 +560,7 @@ describe('useLeaves hook', () => {
 });
 ```
 
-- [ ] **Step 2: Viết mã nguồn cho `src/hooks/useLeaves.js`**
+- [x] **Step 2: Viết mã nguồn cho `src/hooks/useLeaves.js`**
 
 ```javascript
 import { useState, useEffect } from 'react';
@@ -657,14 +657,14 @@ export function useLeaves() {
 }
 ```
 
-- [ ] **Step 3: Chạy test kiểm thử cho `useLeaves`**
+- [x] **Step 3: Chạy test kiểm thử cho `useLeaves`**
 
 ```powershell
 npm run test
 ```
 Expected: PASS.
 
-- [ ] **Step 4: Commit Task 3**
+- [x] **Step 4: Commit Task 3**
 
 ```powershell
 git add src/hooks/
@@ -685,7 +685,7 @@ git commit -m "feat: add useLeaves custom hook with localStorage sync"
   - `Header`: Tiêu đề + Action buttons (Xuất CSV, Sao lưu JSON).
   - `MonthNavigator`: Điều hướng `< Tháng trước`, `Tháng MM/YYYY`, `Tháng sau >`, nút `Hôm nay`.
 
-- [ ] **Step 1: Viết test cho `MonthNavigator.test.jsx`**
+- [x] **Step 1: Viết test cho `MonthNavigator.test.jsx`**
 
 ```jsx
 import { describe, it, expect, vi } from 'vitest';
@@ -723,7 +723,7 @@ describe('MonthNavigator component', () => {
 });
 ```
 
-- [ ] **Step 2: Viết `src/index.css` với Theme hiện đại cao cấp**
+- [x] **Step 2: Viết `src/index.css` với Theme hiện đại cao cấp**
 
 ```css
 :root {
@@ -795,7 +795,7 @@ input, textarea, select {
 }
 ```
 
-- [ ] **Step 3: Viết `src/components/Header.jsx` và `src/components/MonthNavigator.jsx`**
+- [x] **Step 3: Viết `src/components/Header.jsx` và `src/components/MonthNavigator.jsx`**
 
 Tạo `src/components/Header.jsx`:
 ```jsx
@@ -871,7 +871,7 @@ export default function MonthNavigator({ year, month, onPrevMonth, onNextMonth, 
 }
 ```
 
-- [ ] **Step 4: Chạy test và Commit Task 4**
+- [x] **Step 4: Chạy test và Commit Task 4**
 
 ```powershell
 npm run test
@@ -892,7 +892,7 @@ git commit -m "feat: add design tokens, Header, and MonthNavigator components"
   - `StatsOverview({ balanceData })`: Thẻ Hạn mức, Đã nghỉ, Trạng thái Âm/Dương công và thanh % tiến độ.
   - `CalendarGrid({ year, month, leaves, onSelectDate, onEditLeave })`: Lưới 7 ngày tương tác, gắn badge ca nghỉ (Sáng, Chiều, Cả ngày) và ngày hôm nay.
 
-- [ ] **Step 1: Viết test cho `StatsOverview.test.jsx`**
+- [x] **Step 1: Viết test cho `StatsOverview.test.jsx`**
 
 ```jsx
 import { describe, it, expect } from 'vitest';
@@ -938,7 +938,7 @@ describe('StatsOverview component', () => {
 });
 ```
 
-- [ ] **Step 2: Viết mã nguồn cho `src/components/StatsOverview.jsx`**
+- [x] **Step 2: Viết mã nguồn cho `src/components/StatsOverview.jsx`**
 
 ```jsx
 import React from 'react';
@@ -1025,7 +1025,7 @@ export default function StatsOverview({ balanceData }) {
 }
 ```
 
-- [ ] **Step 3: Viết test cho `CalendarGrid.test.jsx`**
+- [x] **Step 3: Viết test cho `CalendarGrid.test.jsx`**
 
 ```jsx
 import { describe, it, expect, vi } from 'vitest';
@@ -1063,7 +1063,7 @@ describe('CalendarGrid component', () => {
 });
 ```
 
-- [ ] **Step 4: Viết mã nguồn cho `src/components/CalendarGrid.jsx`**
+- [x] **Step 4: Viết mã nguồn cho `src/components/CalendarGrid.jsx`**
 
 ```jsx
 import React from 'react';
@@ -1139,7 +1139,7 @@ export default function CalendarGrid({ year, month, leaves, onSelectDate, onEdit
 }
 ```
 
-- [ ] **Step 5: Chạy test và Commit Task 5**
+- [x] **Step 5: Chạy test và Commit Task 5**
 
 ```powershell
 npm run test
@@ -1160,7 +1160,7 @@ git commit -m "feat: add StatsOverview and CalendarGrid components"
   - `LeaveModal({ isOpen, initialData, date, onClose, onSave, onDelete })`: Modal chọn ca Sáng/Chiều/Cả ngày, nhập lý do, nút Lưu/Xóa.
   - `LeaveListTable({ records, onEdit, onDelete })`: Bảng danh sách chi tiết các ngày nghỉ trong tháng.
 
-- [ ] **Step 1: Viết test cho `LeaveModal.test.jsx`**
+- [x] **Step 1: Viết test cho `LeaveModal.test.jsx`**
 
 ```jsx
 import { describe, it, expect, vi } from 'vitest';
@@ -1233,7 +1233,7 @@ describe('LeaveModal component', () => {
 });
 ```
 
-- [ ] **Step 2: Viết mã nguồn cho `src/components/LeaveModal.jsx`**
+- [x] **Step 2: Viết mã nguồn cho `src/components/LeaveModal.jsx`**
 
 ```jsx
 import React, { useState, useEffect } from 'react';
@@ -1375,7 +1375,7 @@ export default function LeaveModal({ isOpen, date, initialData, onClose, onSave,
 }
 ```
 
-- [ ] **Step 3: Viết `src/components/LeaveListTable.jsx` và test**
+- [x] **Step 3: Viết `src/components/LeaveListTable.jsx` và test**
 
 Tạo `src/components/LeaveListTable.test.jsx`:
 ```jsx
@@ -1474,7 +1474,7 @@ export default function LeaveListTable({ records, onEdit, onDelete }) {
 }
 ```
 
-- [ ] **Step 4: Chạy test và Commit Task 6**
+- [x] **Step 4: Chạy test và Commit Task 6**
 
 ```powershell
 npm run test
@@ -1494,7 +1494,7 @@ git commit -m "feat: add LeaveModal and LeaveListTable components"
 **Interfaces:**
 - Produces: Ứng dụng hoàn chỉnh, đầy đủ tính năng: Đăng ký lịch nghỉ, Chấm công chuẩn 4 ngày, Âm/Dương công tức thì, Đổi tháng, Xuất CSV tiếng Việt chuẩn, Sao lưu/Khôi phục JSON.
 
-- [ ] **Step 1: Viết `src/components/BackupModal.jsx`**
+- [x] **Step 1: Viết `src/components/BackupModal.jsx`**
 
 ```jsx
 import React, { useState } from 'react';
@@ -1582,7 +1582,7 @@ export default function BackupModal({ isOpen, leaves, onClose, onImport, onClear
 }
 ```
 
-- [ ] **Step 2: Viết hoàn chỉnh `src/App.css` (Giao diện cao cấp, Glassmorphism, Responsive)**
+- [x] **Step 2: Viết hoàn chỉnh `src/App.css` (Giao diện cao cấp, Glassmorphism, Responsive)**
 
 ```css
 .app-container {
@@ -2304,7 +2304,7 @@ export default function BackupModal({ isOpen, leaves, onClose, onImport, onClear
 }
 ```
 
-- [ ] **Step 3: Viết hoàn thiện `src/App.jsx` kết nối toàn bộ luồng**
+- [x] **Step 3: Viết hoàn thiện `src/App.jsx` kết nối toàn bộ luồng**
 
 ```jsx
 import React, { useState } from 'react';
@@ -2463,7 +2463,7 @@ export default function App() {
 }
 ```
 
-- [ ] **Step 4: Cập nhật `src/App.test.jsx` kiểm thử toàn diện integration**
+- [x] **Step 4: Cập nhật `src/App.test.jsx` kiểm thử toàn diện integration**
 
 ```jsx
 import { describe, it, expect, beforeEach } from 'vitest';
@@ -2511,7 +2511,7 @@ describe('App Integration', () => {
 });
 ```
 
-- [ ] **Step 5: Chạy toàn bộ test suite và build kiểm tra**
+- [x] **Step 5: Chạy toàn bộ test suite và build kiểm tra**
 
 ```powershell
 npm run test
@@ -2519,7 +2519,7 @@ npm run build
 ```
 Expected: All tests pass, build succeeds with zero errors.
 
-- [ ] **Step 6: Commit Task 7**
+- [x] **Step 6: Commit Task 7**
 
 ```powershell
 git add src/App.jsx src/App.css src/App.test.jsx src/components/BackupModal.jsx
