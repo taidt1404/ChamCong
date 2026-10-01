@@ -54,4 +54,21 @@ describe('calendarUtils', () => {
     expect(oct1).toBeDefined();
     expect(oct1.isCurrentMonth).toBe(true);
   });
+
+  it('calculates monthly balance with holiday bonus days', () => {
+    const mockLeaves = [
+      { id: '1', date: '2026-04-10', session: 'full', days: 1.0 },
+      { id: '2', date: '2026-04-15', session: 'full', days: 1.0 },
+      { id: '3', date: '2026-04-20', session: 'full', days: 1.0 },
+      { id: '4', date: '2026-04-25', session: 'full', days: 1.0 }
+    ];
+    // Tháng 4 có thêm 2 ngày lễ (30/4 - 1/5) -> hạn mức là 4 + 2 = 6 ngày
+    const result = calculateMonthlyBalance(mockLeaves, 2026, 4, 2);
+    expect(result.baseQuota).toBe(4.0);
+    expect(result.holidayBonus).toBe(2.0);
+    expect(result.quota).toBe(6.0);
+    expect(result.usedDays).toBe(4.0);
+    expect(result.balance).toBe(2.0); // 6.0 - 4.0 = +2.0
+    expect(result.status).toBe('positive');
+  });
 });

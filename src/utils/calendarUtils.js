@@ -23,7 +23,7 @@ export function getDayOfWeekName(dateStr) {
   return dayNames[day];
 }
 
-export function calculateMonthlyBalance(records, year, month) {
+export function calculateMonthlyBalance(records, year, month, holidayBonus = 0) {
   const monthPrefix = `${year}-${String(month).padStart(2, '0')}`;
   const monthRecords = records.filter(r => r.date && r.date.startsWith(monthPrefix));
 
@@ -40,7 +40,8 @@ export function calculateMonthlyBalance(records, year, month) {
     else if (r.session === 'full') fullCount++;
   });
 
-  const quota = 4.0;
+  const bonus = Math.max(0, Number(holidayBonus) || 0);
+  const quota = Number((4.0 + bonus).toFixed(1));
   const balance = Number((quota - usedDays).toFixed(1));
 
   let status = 'balanced';
@@ -48,6 +49,8 @@ export function calculateMonthlyBalance(records, year, month) {
   else if (balance < 0) status = 'negative';
 
   return {
+    baseQuota: 4.0,
+    holidayBonus: bonus,
     quota,
     usedDays: Number(usedDays.toFixed(1)),
     balance,
