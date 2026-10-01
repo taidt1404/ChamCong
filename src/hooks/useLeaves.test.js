@@ -116,4 +116,21 @@ describe('useLeaves hook', () => {
     const stored = JSON.parse(localStorage.getItem(STORAGE_KEY));
     expect(stored.length).toBe(3);
   });
+
+  it('saves and retrieves monthly holiday bonus days per month', () => {
+    const { result } = renderHook(() => useLeaves());
+
+    expect(result.current.getMonthHolidayBonus(2026, 4)).toBe(0);
+
+    act(() => {
+      result.current.setMonthHolidayBonus(2026, 4, 2);
+    });
+
+    expect(result.current.getMonthHolidayBonus(2026, 4)).toBe(2);
+    expect(result.current.getMonthHolidayBonus(2026, 5)).toBe(0); // Tháng khác vẫn là 0
+
+    const stored = JSON.parse(localStorage.getItem('leave_planner_monthly_quotas_v1'));
+    expect(stored['2026-04']).toBe(2);
+  });
 });
+

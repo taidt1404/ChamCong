@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { getLeaveDays } from '../utils/calendarUtils';
 
 export const STORAGE_KEY = 'leave_planner_records_v1';
+export const QUOTAS_STORAGE_KEY = 'leave_planner_monthly_quotas_v1';
 
 export function useLeaves() {
   const [leaves, setLeaves] = useState(() => {
@@ -14,6 +15,16 @@ export function useLeaves() {
     }
   });
 
+  const [monthlyQuotas, setMonthlyQuotas] = useState(() => {
+    try {
+      const item = localStorage.getItem(QUOTAS_STORAGE_KEY);
+      return item ? JSON.parse(item) : {};
+    } catch (e) {
+      console.error('Failed to load monthly quotas from localStorage', e);
+      return {};
+    }
+  });
+
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(leaves));
@@ -21,6 +32,14 @@ export function useLeaves() {
       console.error('Failed to persist leaves to localStorage', e);
     }
   }, [leaves]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(QUOTAS_STORAGE_KEY, JSON.stringify(monthlyQuotas));
+    } catch (e) {
+      console.error('Failed to persist monthly quotas to localStorage', e);
+    }
+  }, [monthlyQuotas]);
 
   const addLeave = ({ date, session, reason = '' }) => {
     const newRecord = {
@@ -111,16 +130,33 @@ export function useLeaves() {
     });
   };
 
+  const getMonthHolidayBonus = (year, month) => {
+    const key = `${year}-${String(month).padStart(2, '0')}`;
+    return Number(monthlyQuotas[key]) || 0;
+  };
+
+  const setMonthHolidayBonus = (year, month, bonusDays) => {
+    const key = `${year}-${String(month).padStart(2, '0')}`;
+    const cleanBonus = Math.max(0, Number(bonusDays) || 0);
+    setMonthlyQuotas(prev => ({
+      ...prev,
+      [key]: cleanBonus
+    }));
+  };
+
   const clearAllLeaves = () => {
     setLeaves([]);
   };
 
   return {
     leaves,
+    monthlyQuotas,
     addLeave,
     updateLeave,
     deleteLeave,
     saveMultipleLeaves,
+    getMonthHolidayBonus,
+    setMonthHolidayBonus,
     getLeaveByDate,
     importLeaves,
     clearAllLeaves
