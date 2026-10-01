@@ -78,4 +78,27 @@ describe('App Integration', () => {
     expect(screen.getByText('1.0 ngày')).toBeInTheDocument();
     expect(screen.getByText('+3.0 CÔNG')).toBeInTheDocument();
   });
+
+  it('allows adjusting monthly holiday quota and updates balance accordingly', () => {
+    render(<App />);
+
+    // Click nút chỉnh sửa ngày nghỉ lễ
+    const editHolidayBtn = screen.getByLabelText(/Chỉnh sửa ngày nghỉ lễ/i);
+    fireEvent.click(editHolidayBtn);
+
+    // Modal holiday mở ra
+    expect(screen.getByText(/Số Ngày Nghỉ Lễ Tháng/i)).toBeInTheDocument();
+
+    // Chọn +2 ngày lễ
+    fireEvent.click(screen.getByText('+2 Ngày Lễ (Tổng 6 ngày)'));
+
+    // Lưu
+    fireEvent.click(screen.getByText('Lưu Thiết Lập'));
+
+    // Hạn mức tháng cập nhật thành 6.0 ngày
+    expect(screen.getByText('6.0 ngày')).toBeInTheDocument();
+    expect(screen.getByText(/Chuẩn 4.0 \+ 2.0 ngày lễ/i)).toBeInTheDocument();
+    expect(screen.getByText('+6.0 CÔNG')).toBeInTheDocument();
+  });
 });
+

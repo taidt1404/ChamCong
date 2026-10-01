@@ -27,7 +27,7 @@
 **Interfaces:**
 - Produces: `calculateMonthlyBalance(records, year, month, holidayBonus = 0): { baseQuota: 4.0, holidayBonus: number, quota: number, usedDays: number, balance: number, status: string, ... }`
 
-- [ ] **Step 1: Viết test cho `calculateMonthlyBalance` với `holidayBonus` trong `src/utils/calendarUtils.test.js`**
+- [x] **Step 1: Viết test cho `calculateMonthlyBalance` với `holidayBonus` trong `src/utils/calendarUtils.test.js`**
 
 ```javascript
   it('calculates monthly balance with holiday bonus days', () => {
@@ -48,12 +48,12 @@
   });
 ```
 
-- [ ] **Step 2: Chạy test để xác nhận FAIL**
+- [x] **Step 2: Chạy test để xác nhận FAIL**
 
 Run: `npx vitest run src/utils/calendarUtils.test.js`
 Expected: FAIL (result.quota is 4 instead of 6).
 
-- [ ] **Step 3: Triển khai trong `src/utils/calendarUtils.js`**
+- [x] **Step 3: Triển khai trong `src/utils/calendarUtils.js`**
 
 Cập nhật hàm `calculateMonthlyBalance`:
 ```javascript
@@ -97,12 +97,12 @@ export function calculateMonthlyBalance(records, year, month, holidayBonus = 0) 
 }
 ```
 
-- [ ] **Step 4: Chạy test để xác nhận PASS**
+- [x] **Step 4: Chạy test để xác nhận PASS**
 
 Run: `npx vitest run src/utils/calendarUtils.test.js`
 Expected: PASS.
 
-- [ ] **Step 5: Commit Task 1**
+- [x] **Step 5: Commit Task 1**
 
 ```bash
 git add src/utils/calendarUtils.js src/utils/calendarUtils.test.js
@@ -123,7 +123,7 @@ git commit -m "feat: support holidayBonus in calculateMonthlyBalance utility"
   - `getMonthHolidayBonus(year, month): number`
   - `setMonthHolidayBonus(year, month, bonusDays: number): void`
 
-- [ ] **Step 1: Viết test cho `setMonthHolidayBonus` trong `src/hooks/useLeaves.test.js`**
+- [x] **Step 1: Viết test cho `setMonthHolidayBonus` trong `src/hooks/useLeaves.test.js`**
 
 ```javascript
   it('saves and retrieves monthly holiday bonus days per month', () => {
@@ -143,24 +143,24 @@ git commit -m "feat: support holidayBonus in calculateMonthlyBalance utility"
   });
 ```
 
-- [ ] **Step 2: Chạy test để xác nhận FAIL**
+- [x] **Step 2: Chạy test để xác nhận FAIL**
 
 Run: `npx vitest run src/hooks/useLeaves.test.js`
 Expected: FAIL (result.current.setMonthHolidayBonus is not a function).
 
-- [ ] **Step 3: Triển khai trong `src/hooks/useLeaves.js`**
+- [x] **Step 3: Triển khai trong `src/hooks/useLeaves.js`**
 
 Thêm `QUOTAS_STORAGE_KEY = 'leave_planner_monthly_quotas_v1'` và hàm:
 - `monthlyQuotas` state khởi tạo từ `localStorage`.
 - `getMonthHolidayBonus(year, month)`: trả về `monthlyQuotas[`${year}-${String(month).padStart(2, '0')}`] || 0`.
 - `setMonthHolidayBonus(year, month, bonusDays)`: cập nhật `monthlyQuotas`.
 
-- [ ] **Step 4: Chạy test để xác nhận PASS**
+- [x] **Step 4: Chạy test để xác nhận PASS**
 
 Run: `npx vitest run src/hooks/useLeaves.test.js`
 Expected: PASS.
 
-- [ ] **Step 5: Commit Task 2**
+- [x] **Step 5: Commit Task 2**
 
 ```bash
 git add src/hooks/useLeaves.js src/hooks/useLeaves.test.js
@@ -184,7 +184,7 @@ git commit -m "feat: add monthly holiday quotas management to useLeaves hook"
   - `onClose`: () => void
   - `onSave`: (bonusDays: number) => void
 
-- [ ] **Step 1: Viết test cho `HolidayModal.test.jsx`**
+- [x] **Step 1: Viết test cho `HolidayModal.test.jsx`**
 
 ```jsx
 import { describe, it, expect, vi } from 'vitest';
@@ -220,12 +220,12 @@ describe('HolidayModal component', () => {
 });
 ```
 
-- [ ] **Step 2: Chạy test để xác nhận FAIL**
+- [x] **Step 2: Chạy test để xác nhận FAIL**
 
 Run: `npx vitest run src/components/HolidayModal.test.jsx`
 Expected: FAIL.
 
-- [ ] **Step 3: Triển khai `src/components/HolidayModal.jsx`**
+- [x] **Step 3: Triển khai `src/components/HolidayModal.jsx`**
 
 Modal cho phép chọn nhanh:
 - `+0 Ngày (Chuẩn 4 ngày)`
@@ -235,12 +235,12 @@ Modal cho phép chọn nhanh:
 - Hoặc nhập số lẻ tùy chọn vào ô input.
 - Nút "Lưu Thiết Lập" và "Hủy".
 
-- [ ] **Step 4: Chạy test để xác nhận PASS**
+- [x] **Step 4: Chạy test để xác nhận PASS**
 
 Run: `npx vitest run src/components/HolidayModal.test.jsx`
 Expected: PASS.
 
-- [ ] **Step 5: Commit Task 3**
+- [x] **Step 5: Commit Task 3**
 
 ```bash
 git add src/components/HolidayModal.jsx src/components/HolidayModal.test.jsx
@@ -259,7 +259,7 @@ git commit -m "feat: create HolidayModal component with quick preset chips"
 - Props `StatsOverview`:
   - Thêm `onEditHolidayQuota`: () => void
 
-- [ ] **Step 1: Viết test cho nút chỉnh sửa ngày lễ trong `src/components/StatsOverview.test.jsx`**
+- [x] **Step 1: Viết test cho nút chỉnh sửa ngày lễ trong `src/components/StatsOverview.test.jsx`**
 
 ```jsx
   it('renders holiday bonus info and triggers edit holiday callback', () => {
@@ -286,22 +286,22 @@ git commit -m "feat: create HolidayModal component with quick preset chips"
   });
 ```
 
-- [ ] **Step 2: Chạy test để xác nhận FAIL**
+- [x] **Step 2: Chạy test để xác nhận FAIL**
 
 Run: `npx vitest run src/components/StatsOverview.test.jsx`
 Expected: FAIL.
 
-- [ ] **Step 3: Cập nhật `src/components/StatsOverview.jsx`**
+- [x] **Step 3: Cập nhật `src/components/StatsOverview.jsx`**
 
 - Hiển thị nút chỉnh sửa trên thẻ Hạn Mức Tháng.
 - Hiển thị badge: `✨ Chuẩn 4.0 + ${holidayBonus.toFixed(1)} ngày lễ` nếu `holidayBonus > 0`.
 
-- [ ] **Step 4: Chạy test để xác nhận PASS**
+- [x] **Step 4: Chạy test để xác nhận PASS**
 
 Run: `npx vitest run src/components/StatsOverview.test.jsx`
 Expected: PASS.
 
-- [ ] **Step 5: Commit Task 4**
+- [x] **Step 5: Commit Task 4**
 
 ```bash
 git add src/components/StatsOverview.jsx src/components/StatsOverview.test.jsx
@@ -316,7 +316,7 @@ git commit -m "feat: add holiday bonus display and edit trigger to StatsOverview
 - Modify: `src/App.jsx`, `src/App.css`
 - Test: `src/App.test.jsx`
 
-- [ ] **Step 1: Viết test integration cho holiday quota trong `src/App.test.jsx`**
+- [x] **Step 1: Viết test integration cho holiday quota trong `src/App.test.jsx`**
 
 ```jsx
   it('allows adjusting monthly holiday quota and updates balance accordingly', () => {
@@ -342,24 +342,24 @@ git commit -m "feat: add holiday bonus display and edit trigger to StatsOverview
   });
 ```
 
-- [ ] **Step 2: Cập nhật `src/App.jsx` và `src/App.css`**
+- [x] **Step 2: Cập nhật `src/App.jsx` và `src/App.css`**
 
 - Lấy `holidayBonus = getMonthHolidayBonus(currentYear, currentMonth)`.
 - Truyền `holidayBonus` vào `calculateMonthlyBalance(leaves, currentYear, currentMonth, holidayBonus)`.
 - State `isHolidayModalOpen`, mở modal khi click vào thẻ hạn mức.
 - Thêm style cho thẻ hạn mức có nút sửa, badge ngày lễ.
 
-- [ ] **Step 3: Chạy toàn bộ test suite**
+- [x] **Step 3: Chạy toàn bộ test suite**
 
 Run: `npm run test`
 Expected: All tests pass.
 
-- [ ] **Step 4: Chạy build kiểm tra**
+- [x] **Step 4: Chạy build kiểm tra**
 
 Run: `npm run build`
 Expected: Build thành công.
 
-- [ ] **Step 5: Commit Task 5 và đẩy lên GitHub**
+- [x] **Step 5: Commit Task 5 và đẩy lên GitHub**
 
 ```bash
 git add src/App.jsx src/App.css src/App.test.jsx

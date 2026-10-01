@@ -6,6 +6,7 @@ import CalendarGrid from './components/CalendarGrid';
 import LeaveModal from './components/LeaveModal';
 import LeaveListTable from './components/LeaveListTable';
 import BackupModal from './components/BackupModal';
+import HolidayModal from './components/HolidayModal';
 import { useLeaves } from './hooks/useLeaves';
 import { calculateMonthlyBalance } from './utils/calendarUtils';
 import { downloadCSV } from './utils/exportUtils';
@@ -22,6 +23,8 @@ export default function App() {
     updateLeave,
     deleteLeave,
     saveMultipleLeaves,
+    getMonthHolidayBonus,
+    setMonthHolidayBonus,
     importLeaves,
     clearAllLeaves
   } = useLeaves();
@@ -31,6 +34,7 @@ export default function App() {
   const [editingLeave, setEditingLeave] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBackupOpen, setIsBackupOpen] = useState(false);
+  const [isHolidayModalOpen, setIsHolidayModalOpen] = useState(false);
 
   // Multi-select states
   const [isMultiSelectMode, setIsMultiSelectMode] = useState(false);
@@ -132,7 +136,13 @@ export default function App() {
     downloadCSV(leaves, currentYear, currentMonth);
   };
 
-  const balanceData = calculateMonthlyBalance(leaves, currentYear, currentMonth);
+  const currentHolidayBonus = getMonthHolidayBonus(currentYear, currentMonth);
+  const balanceData = calculateMonthlyBalance(
+    leaves,
+    currentYear,
+    currentMonth,
+    currentHolidayBonus
+  );
 
   return (
     <div className="app-container">
@@ -149,7 +159,10 @@ export default function App() {
         onToday={handleToday}
       />
 
-      <StatsOverview balanceData={balanceData} />
+      <StatsOverview
+        balanceData={balanceData}
+        onEditHolidayQuota={() => setIsHolidayModalOpen(true)}
+      />
 
       {/* Multi-select Controls & Action Bar */}
       <div className="calendar-toolbar">
@@ -224,6 +237,18 @@ export default function App() {
         onSave={handleSaveLeave}
         onDelete={handleDeleteLeave}
         onRemoveDate={handleRemoveDateChip}
+      />
+
+      <HolidayModal
+        isOpen={isHolidayModalOpen}
+        year={currentYear}
+        month={currentMonth}
+        currentBonus={currentHolidayBonus}
+        onClose={() => setIsHolidayModalOpen(false)}
+        onSave={bonusDays => {
+          setMonthHolidayBonus(currentYear, currentMonth, bonusDays);
+          setIsHolidayModalOpen(false);
+        }}
       />
 
       <BackupModal
